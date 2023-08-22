@@ -1,5 +1,6 @@
 <script setup>
 import Card from '../components/Card.vue';
+import { ref } from 'vue';
 
 const users = [{
     id: 1,
@@ -21,13 +22,16 @@ const users = [{
 }
 ];
 
+const selected = ref(null);
+
 </script>
 
 <template>
     <h1 class="title">A propos</h1>
 
     <div class="flex">
-        <Card class="card" :user="user" v-for="user in users" :key="user.id" />
+        <Card class="card" :user="user" v-for="user in users" :key="user.id" @opened="selected = user.id"
+            :open="selected === user.id" />
     </div>
 </template>
 

@@ -1,18 +1,14 @@
 <script setup>
-import { ref } from 'vue';
-import Button from './Button.vue';
+import Button from '@/components/Button.vue';
 
 
-const showBio = ref(false);
 
-const toggle = () => {
-    if (!showBio.value) {
+const props = defineProps(['user', 'open']);
+const emit = defineEmits(['opened']);
 
-    }
-    showBio.value = !showBio.value;
+const toggleBio = () => {
+    emit('opened', props.user)
 };
-
-const props = defineProps(['user']);
 
 </script>
 
@@ -26,8 +22,8 @@ const props = defineProps(['user']);
 
         <div class="card-content">
             <h4>{{ user.post }}</h4>
-            <Button v-if="!showBio" @click="toggle">Voir la bio </Button>
-            <p v-else>
+            <Button v-if="!open" @click="toggleBio">Voir la bio </Button>
+            <p v-if="open">
                 {{ user.bio }}
             </p>
         </div>
@@ -42,18 +38,18 @@ const props = defineProps(['user']);
     border-radius: 10px;
     margin: 10px;
     padding: 10px;
-    
+
 }
 
-.card-title, .card-content {
+.card-title,
+.card-content {
     text-align: center;
-    width: 50%;    
+    width: 50%;
 }
 
-h4{
+h4 {
     margin: 10px;
 }
-
 </style>
 
 
