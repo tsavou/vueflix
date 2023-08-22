@@ -43,6 +43,7 @@ const toggle = () => logged.value = !logged.value
 header{
   background-color: #3a4050;
   padding: 1em 0;
+  width: 100%;
 }
 
 .flex{
@@ -80,5 +81,7 @@ a{
 .user-not-logged{
   margin-left:40px ;
 }
+
+
 
 </style>

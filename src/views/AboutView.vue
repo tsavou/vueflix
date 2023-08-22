@@ -46,7 +46,7 @@ const selected = ref(null);
     width: 30%;
 }
 
-@media (max-width: 1030px) {
+@media screen and (min-width: 601px) and (max-width: 1024px){
     .card {
         width: 60%;        
     }
@@ -55,7 +55,7 @@ const selected = ref(null);
         justify-content: center;
     }
 }
-@media (max-width: 520px) {
+@media (max-width: 600px) {
     .card {
         width: 60%;
         display: flex;

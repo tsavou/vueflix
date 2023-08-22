@@ -50,6 +50,7 @@ const formatDate = (date) => {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 1.4em;
 
 
 }
@@ -60,6 +61,11 @@ img {
 }
 
 figcaption {
-    padding: 0.5em;
+    padding: 0.75em ;
+}
+
+p {
+    color: #858585;
+   
 }
 </style>

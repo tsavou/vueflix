@@ -42,4 +42,24 @@ $fetch('http://localhost:3000/movies ')
    border-radius: 10px;
 }
 
+@media  (max-width: 1024px) {
+    .movie-card {
+        width: 20%;
+    }
+    
+}
+
+@media  (max-width: 740px) {
+    .movie-card {
+        width: 30%;
+    }
+    
+}
+
+@media  (max-width: 500px) {
+     .movie-card {
+        width: 100%;
+    }
+    
+}
 </style>
