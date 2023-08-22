@@ -8,18 +8,30 @@ const toggle = () => logged.value = !logged.value
 </script>
 
 <template>
-  <nav>
-    <RouterLink to="/">Home</RouterLink>
-    <RouterLink to="/a-propos">A propos</RouterLink>
-    <Button @click="toggle" v-if="!logged">Connexion</Button>
+  <header>
 
-    <div v-else class="user-logged">
-      tsavou
-      <img src="https://i.pravatar.cc/75?u=tsavou" alt="tsavou">
-      <Button @click="toggle">x</Button>
-     
+    <div class="container">
+      <div class="flex">
+        <h1>
+          <RouterLink to="/">Vue<span class="red">Flix</span></RouterLink>
+        </h1>      
+        
+        
+        <nav class="flex">
+          <RouterLink to="/">Accueil</RouterLink>
+          <RouterLink to="/a-propos">A propos</RouterLink>
+          <Button @click="toggle" v-if="!logged" class="user-not-logged">Connexion</Button>
+          
+          <div v-else class="user-logged">
+            <strong>tsavou</strong>
+            <img src="https://i.pravatar.cc/75?u=tsavou" alt="tsavou">
+            <Button @click="toggle">X</Button>
+            
+          </div>
+        </nav>
+      </div>
     </div>
-  </nav>
+  </header>
 </template>
 
 <style scoped>
@@ -27,8 +39,45 @@ const toggle = () => logged.value = !logged.value
   display: inline;
 }
 
-nav{
+header{
   background-color: #3a4050;
+  padding: 1em 0;
+}
+
+.flex{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav{
+  color: #fff;
+}
+
+a{
+  color: #fff;
+  padding: 0 0.5em;
+}
+
+.red{
+  color: #b91c1c;
+}
+
+.user-logged{
+  display: inline-flex;
+  align-items: center;
+  margin-left: 24px;
+  gap: 10px;
+
+}
+
+.user-logged img{
+  border-radius: 50%;
+
+}
+
+.user-not-logged{
+  margin-left:40px ;
 }
 
 </style>
