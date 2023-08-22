@@ -15,3 +15,20 @@
     background-color:#e5e7eb;
     font-family: 'Nunito';
   }
+
+  a{
+    text-decoration: none;
+  }
+
+  .container{
+    max-width: 1280px;
+    margin: auto;
+    padding: 0 12px;
+  }
+
+  .title{
+    text-align: center;
+    font-weight: 700;
+    margin: 3em 0;
+    font-size: 36px;
+  }

@@ -1,4 +1,4 @@
 
 <template>
-  <h1>Accueil</h1>
+  <h1 class="title">Accueil</h1>
 </template>
