@@ -45,5 +45,26 @@ const selected = ref(null);
 .card {
     width: 30%;
 }
+
+@media (max-width: 1030px) {
+    .card {
+        width: 60%;        
+    }
+    .flex{
+        display: flex;
+        justify-content: center;
+    }
+}
+@media (max-width: 520px) {
+    .card {
+        width: 60%;
+        display: flex;
+        flex-direction: column;       
+    }
+    .flex{
+        display: flex;
+        justify-content: center;
+    }
+}
 </style>
 
