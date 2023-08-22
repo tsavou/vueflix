@@ -34,21 +34,29 @@ const toggleBio = () => {
 .card-container {
     display: flex;
     align-items: center;
-    background-color: aliceblue;
+    background-color: #fff;
     border-radius: 10px;
-    margin: 10px;
-    padding: 10px;
+    padding: 1em;
+    box-shadow:0 1px 3px 3px #0000001a; ;
 
 }
 
-.card-title,
-.card-content {
+.card-title, .card-content {
     text-align: center;
     width: 50%;
 }
 
+h3{
+    margin-top: 5px;
+}
+
 h4 {
-    margin: 10px;
+    margin-bottom: 15px;
+}
+
+img {
+    border-radius: 50%;
+    max-width: 128px;
 }
 </style>
 
