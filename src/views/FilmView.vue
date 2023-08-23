@@ -19,7 +19,7 @@ getMovies().then(response => {
 
 const NextPage = () => {
     loading.value = true
-    getMovies(page.value++).then(response => {
+    getMovies(++page.value).then(response => {
         setTimeout(() => {
             movies.value = response
             loading.value = false
@@ -29,7 +29,7 @@ const NextPage = () => {
 }
 const PreviousPage = () => {
     loading.value = true
-    getMovies(page.value--).then(response => {
+    getMovies(--page.value).then(response => {
         setTimeout(() => {
             movies.value = response
             loading.value = false
@@ -88,6 +88,10 @@ button {
 button:disabled {
     cursor: not-allowed;
     background-color: #d1d5db;
+}
+
+img{
+    background-color: #b91c1c;
 }
 
 .page {

@@ -18,7 +18,7 @@ const formatDate = (date) => {
 <template>
     <figure>
         <div class="relative">
-            <img :src="movie.poster_path" alt="">
+            <img :src="movie.poster_path" :alt="movie.title">
             <div class="absolute">
                 <span class="note" :style="{ border: `solid 2px ${color}` }"> {{ note }}%</span>
             </div>
@@ -26,7 +26,7 @@ const formatDate = (date) => {
         <figcaption>
             <h3>{{ movie.title }}</h3>
             <p>{{ formatDate(movie.release_date) }}</p>
-            <Button>Plus d'infos</Button>
+            <Button>Ajouter au panier</Button>            
         </figcaption>
     </figure>
 </template>
@@ -62,9 +62,19 @@ img {
     border-radius: 10px 10px 0 0;
 }
 
+figure{
+    display: flex;
+    flex-direction: column;
+}
 
 figcaption {
     padding: 0.75em ;
+    height: 100%;
+    padding: 0.75em;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    
 }
 
 p {
@@ -77,5 +87,6 @@ figure:hover{
     opacity: 0.8;
     scale: 1.1;
     box-shadow: #000000 0px 0px 20px;
+    z-index: 100;
 }
 </style>
