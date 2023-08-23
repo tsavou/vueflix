@@ -42,21 +42,24 @@ const PreviousPage = () => {
 </script>
 
 <template>
-    <h1 class="title">Films</h1>
-    <p class="loader" v-if="loading">
-        <loader />
-    </p>
-    <div v-else class="movie-container">
-        <RouterLink class="movie-card" :to="`/films/${movie.id}`" v-for="movie in movies"   >
-        <MovieCard  :movie="movie" />
-        </RouterLink>
+    <div class="container">
 
-    </div>
-
-    <div class="page">
-        <Button :disabled="page<=1" @click="PreviousPage"><img src="../assets/svg/previous.svg" alt=""></Button>
-        <p id="page">{{ page }}</p>
-        <Button :disabled="page>=4" @click="NextPage"><img src="../assets/svg/next.svg" alt=""></Button>
+        <h1 class="title">Films</h1>
+        <p class="loader" v-if="loading">
+            <loader />
+        </p>
+        <div v-else class="movie-container">
+            <RouterLink class="movie-card" :to="`/films/${movie.id}`" v-for="movie in movies"   >
+                <MovieCard  :movie="movie" />
+            </RouterLink>
+            
+        </div>
+        
+        <div class="page">
+            <Button :disabled="page<=1" @click="PreviousPage"><img src="../assets/svg/previous.svg" alt=""></Button>
+            <p id="page">{{ page }}</p>
+            <Button :disabled="page>=4" @click="NextPage"><img src="../assets/svg/next.svg" alt=""></Button>
+        </div>
     </div>
 </template>
 
