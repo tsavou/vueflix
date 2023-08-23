@@ -16,23 +16,20 @@ const formatDate = (date) => {
 </script>
 
 <template>
-    <figure>
-        <div class="relative">
-            <img :src="movie.poster_path" :alt="movie.title">
-            <div class="absolute">
-                <span class="note" :style="{ border: `solid 2px ${color}` }"> {{ note }}%</span>
-            </div>
+    <div class="relative">
+        <img :src="movie.poster_path" :alt="movie.title">
+        <div class="absolute">
+            <span class="note" :style="{ border: `solid 2px ${color}` }"> {{ note }}%</span>
         </div>
-        <figcaption>
-            <h3>{{ movie.title }}</h3>
-            <p>{{ formatDate(movie.release_date) }}</p>
-            <Button>Ajouter au panier</Button>            
-        </figcaption>
-    </figure>
+    </div>
+    <div class="card-footer">
+        <h3>{{ movie.title }}</h3>
+        <p>{{ formatDate(movie.release_date) }}</p>
+        <Button>Ajouter au panier</Button>
+    </div>
 </template>
 
 <style scoped>
-
 .relative {
     position: relative;
 }
@@ -62,31 +59,23 @@ img {
     border-radius: 10px 10px 0 0;
 }
 
-figure{
-    display: flex;
-    flex-direction: column;
-}
 
-figcaption {
-    padding: 0.75em ;
+.card-footer {
+    padding: 0.75em;
     height: 100%;
     padding: 0.75em;
     display: flex;
     justify-content: space-between;
     flex-direction: column;
-    
+
+}
+
+h3{
+    color: #000000;
 }
 
 p {
     color: #858585;
-   
-}
 
-figure:hover{
-    cursor: pointer;
-    opacity: 0.8;
-    scale: 1.1;
-    box-shadow: #000000 0px 0px 20px;
-    z-index: 100;
 }
 </style>
