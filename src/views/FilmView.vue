@@ -15,7 +15,7 @@ getMovies().then(response => {
     setTimeout(() => {
         movies.value = response
         loading.value = false
-    }, 3000)
+    }, 1000)
 })
 
 const NextPage = () => {
@@ -47,7 +47,7 @@ const PreviousPage = () => {
         <loader />
     </p>
     <div v-else class="movie-container">
-        <RouterLink class="movie-card" :to="`/films/${movie.id}-${movie.title}`" v-for="movie in movies"   >
+        <RouterLink class="movie-card" :to="`/films/${movie.id}`" v-for="movie in movies"   >
         <MovieCard  :movie="movie" />
         </RouterLink>
 
