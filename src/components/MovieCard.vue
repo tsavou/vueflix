@@ -1,9 +1,8 @@
 <script setup>
 import Button from '@/components/Button.vue';
+import note from '@/components/Note.vue';
 
 const props = defineProps(['movie'])
-const note = Math.ceil(props.movie.vote_average * 10)
-const color = note >= 70 ? 'green' : note < 40 ? 'red' : 'yellow'
 
 const formatDate = (date) => {
     const day = new Date(date).getDate()
@@ -19,7 +18,7 @@ const formatDate = (date) => {
     <div class="relative">
         <img :src="movie.poster_path" :alt="movie.title">
         <div class="absolute">
-            <span class="note" :style="{ border: `solid 2px ${color}` }"> {{ note }}%</span>
+            <note :note="movie.vote_average"></note>
         </div>
     </div>
     <div class="card-footer">
@@ -38,20 +37,6 @@ const formatDate = (date) => {
     position: absolute;
     bottom: 3%;
     left: 3%;
-}
-
-.note {
-    border-radius: 50%;
-    background-color: #000000;
-    color: #fff;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 1.4em;
-
-
 }
 
 img {
