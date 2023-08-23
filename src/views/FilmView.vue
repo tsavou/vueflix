@@ -1,65 +1,125 @@
 <script setup>
-import MovieCard from '../components/MovieCard.vue';
+import MovieCard from '@/components/MovieCard.vue';
+import Button from '@/components/Button.vue';
+import loader from '@/components/loader.vue';
 import { ref } from 'vue'
 import { $fetch } from 'ohmyfetch'
 
 const movies = ref([])
 const loading = ref(true)
+const page = ref(1)
+const getMovies = (page) => $fetch(`http://localhost:3000/movies?_page=${page}&_limit=10`)
 
-$fetch('http://localhost:3000/movies ')
-    .then(response => {
+getMovies().then(response => {
+    setTimeout(() => {
+        movies.value = response
+        loading.value = false
+    }, 3000)
+})
+
+const NextPage = () => {
+    loading.value = true
+    getMovies(page.value++).then(response => {
         setTimeout(() => {
             movies.value = response
             loading.value = false
-        }, 0)
+        }, 500)
     })
+
+}
+const PreviousPage = () => {
+    loading.value = true
+    getMovies(page.value--).then(response => {
+        setTimeout(() => {
+            movies.value = response
+            loading.value = false
+        }, 500)
+    })
+
+}
 
 </script>
 
 <template>
     <h1 class="title">Films</h1>
-    <p v-if="loading">Chargement en cours...</p>
+    <p class="loader" v-if="loading">
+        <loader />
+    </p>
     <div v-else class="movie-container">
         <MovieCard class="movie-card" v-for="movie in movies" :movie="movie" />
+
+    </div>
+
+    <div class="page">
+        <Button :disabled="page<=1" @click="PreviousPage"><img src="../assets/svg/previous.svg" alt=""></Button>
+        <p id="page">{{ page }}</p>
+        <Button :disabled="page>=4" @click="NextPage"><img src="../assets/svg/next.svg" alt=""></Button>
     </div>
 </template>
 
 <style scoped>
+.loader {
+    text-align: center;
+
+}
 
 .movie-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
     gap: 2%;
-    
-    
+
 }
 
 .movie-card {
-   width: 18%;
-   background-color: #fff;
-   margin-bottom: 2%;
-   border-radius: 10px;
+    width: 18%;
+    background-color: #fff;
+    margin-bottom: 2%;
+    border-radius: 10px;
 }
 
-@media  (max-width: 1024px) {
+
+button {
+    font-size: 1.5em;
+    margin: auto;
+
+}
+
+button:disabled {
+    cursor: not-allowed;
+    background-color: #d1d5db;
+}
+
+.page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+#page{
+    font-size: 1.2em;
+    font-weight: 700;
+}
+
+@media (max-width: 1024px) {
     .movie-card {
         width: 20%;
     }
-    
+
 }
 
-@media  (max-width: 740px) {
+@media (max-width: 740px) {
     .movie-card {
         width: 30%;
     }
-    
+
 }
 
-@media  (max-width: 500px) {
-     .movie-card {
+@media (max-width: 500px) {
+    .movie-card {
         width: 100%;
     }
-    
+
 }
 </style>

@@ -1,5 +1,5 @@
 <script setup>
-import Card from '../components/Card.vue';
+import Card from '@/components/Card.vue';
 import { ref } from 'vue';
 
 const users = [{
@@ -16,7 +16,7 @@ const users = [{
 },
 {
     id: 3,
-    nom: "Thomas Leroy",
+    name: "Thomas Leroy",
     post: "Commercial",
     bio: "Thomas est un commercial dynamique ayant une expérience éprouvée dans la vente de produits technologiques. Il excelle dans la création de relations positives avec les clients et la compréhension de leurs besoins."
 }

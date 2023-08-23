@@ -1,5 +1,5 @@
 <script setup>
-
+import Button from '@/components/Button.vue';
 
 const props = defineProps(['movie'])
 const note = Math.ceil(props.movie.vote_average * 10)
@@ -26,11 +26,13 @@ const formatDate = (date) => {
         <figcaption>
             <h3>{{ movie.title }}</h3>
             <p>{{ formatDate(movie.release_date) }}</p>
+            <Button>Plus d'infos</Button>
         </figcaption>
     </figure>
 </template>
 
 <style scoped>
+
 .relative {
     position: relative;
 }
@@ -60,6 +62,7 @@ img {
     border-radius: 10px 10px 0 0;
 }
 
+
 figcaption {
     padding: 0.75em ;
 }
@@ -67,5 +70,12 @@ figcaption {
 p {
     color: #858585;
    
+}
+
+figure:hover{
+    cursor: pointer;
+    opacity: 0.8;
+    scale: 1.1;
+    box-shadow: #000000 0px 0px 20px;
 }
 </style>
