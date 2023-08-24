@@ -1,6 +1,8 @@
 <script setup>
 import Button from '@/components/Button.vue';
 import note from '@/components/Note.vue';
+import { RouterLink } from 'vue-router'
+import { ref } from 'vue'
 
 const props = defineProps(['movie'])
 
@@ -11,20 +13,28 @@ const formatDate = (date) => {
     return `${day} ${month} ${year}`
 }
 
+const showBio = ref(false)
 
 </script>
 
 <template>
-    <div class="relative">
-        <img :src="movie.poster_path" :alt="movie.title">
-        <div class="absolute">
-            <note :note="movie.vote_average"></note>
+    <div>
+
+        <RouterLink :to="`/films/${movie.id}`" @mouseover="showBio = !showBio" @mouseout="showBio = !showBio" class="relative">
+            <img :src="movie.poster_path" :alt="movie.title">
+
+            <div class="absolute">
+                <div class="tagline" v-if="showBio" >{{ movie.tagline }}</div>
+                <note :note="movie.vote_average"></note>
+            </div>
+        </RouterLink>
+        <div class="card-footer">
+            <RouterLink :to="`/films/${movie.id}`" class="">
+                <h3>{{ movie.title }}</h3>
+            </RouterLink>
+            <p>{{ formatDate(movie.release_date) }}</p>
+            <Button>Ajouter au panier</Button>
         </div>
-    </div>
-    <div class="card-footer">
-        <h3>{{ movie.title }}</h3>
-        <p>{{ formatDate(movie.release_date) }}</p>
-        <Button>Ajouter au panier</Button>
     </div>
 </template>
 
@@ -35,13 +45,29 @@ const formatDate = (date) => {
 
 .absolute {
     position: absolute;
-    bottom: 3%;
-    left: 3%;
+    bottom: -4%;
+    left: 2%;
+}
+
+.tagline {
+    color: #000000;
+    font-weight: 700;
+    text-align: center;
+    transition: 1s;
+  
+
+}
+.tagline:hover+img{
+    opacity: 0.5;
 }
 
 img {
     width: 100%;
     border-radius: 10px 10px 0 0;
+}
+
+img:hover {
+    opacity: 0.5;
 }
 
 
@@ -55,12 +81,19 @@ img {
 
 }
 
-h3{
+h3 {
     color: #000000;
+}
+
+h3:hover{
+    text-decoration: underline;
+    
 }
 
 p {
     color: #858585;
 
 }
+
+
 </style>

@@ -4,7 +4,7 @@ import Button from '@/components/Button.vue';
 import loader from '@/components/loader.vue';
 import { ref } from 'vue'
 import { $fetch } from 'ohmyfetch'
-import { RouterLink } from 'vue-router'
+
 
 const movies = ref([])
 const loading = ref(true)
@@ -49,9 +49,7 @@ const PreviousPage = () => {
             <loader />
         </p>
         <div v-else class="movie-container">
-            <RouterLink class="movie-card" :to="`/films/${movie.id}`" v-for="movie in movies"   >
-                <MovieCard  :movie="movie" />
-            </RouterLink>
+                <MovieCard class="movie-card" v-for="movie in movies" :movie="movie" />
             
         </div>
         
@@ -87,13 +85,7 @@ const PreviousPage = () => {
 
 }
 
-.movie-card:hover{
-    cursor: pointer;
-    opacity: 0.8;
-    scale: 1.1;
-    box-shadow: #000000 0px 0px 20px;
-    z-index: 100;
-}
+
 
 button {
     font-size: 1.5em;
