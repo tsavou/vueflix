@@ -39,15 +39,16 @@ const PreviousPage = () => {
 
 }
 
+
 </script>
 
 <template>
     <div class="container">
 
         <h1 class="title">Films</h1>
-        <p class="loader" v-if="loading">
-            <loader />
-        </p>
+        
+            <loader v-if="loading" />
+        
         <div v-else class="movie-container">
                 <MovieCard class="movie-card" v-for="movie in movies" :movie="movie" />
             
@@ -63,7 +64,8 @@ const PreviousPage = () => {
 
 <style scoped>
 .loader {
-    text-align: center;
+    height: 200px;
+    
 
 }
 

@@ -3,15 +3,18 @@ import { useRoute } from 'vue-router'
 import { $fetch } from 'ohmyfetch'
 import { ref, computed } from 'vue'
 import Note from '@/components/Note.vue'
+import loader from '@/components/loader.vue'
 
 const route = useRoute();
 const movie = ref({});
+const loading= ref(true);
 
 
 const getMovie = (id) => $fetch(`http://localhost:3000/movies/${id}?_expand=genre&_expand=actors`)
 
 getMovie(route.params.id).then(response => {
     movie.value = response
+    loading.value = false
 })
 
 const Year = computed(() => new Date(movie.value.release_date).getFullYear());
@@ -37,79 +40,83 @@ const age = (date)=>{
 
 
 
-
-
-
-
-
-
-
-
 </script>
 
 <template>
-    <div class="movie-container" :style="{ backgroundImage: `url(${movie.backdrop_path})` }">
-        <div class="movie-bg">
-            <div class="container">
-                <div class="flex-movie">
+    <div v-if="!loading">
+        <div class="movie-container" :style="{ backgroundImage: `url(${movie.backdrop_path})` }">
+            <div class="movie-bg">
+                <div class="container">
+                    <div class="flex-movie">
 
-
-                    <img class="movie-poster" :src="movie.poster_path" :alt="movie.title">
-
-                    <div class="movie-content">
-
-
-                        <h1>{{ movie.title }} <span>({{ Year }})</span></h1>
-                        <p>{{ new Date(movie.release_date).toLocaleDateString('fr-FR') }} - {{ movie.genre?.name }} - {{
+                        
+                        <img class="movie-poster" :src="movie.poster_path" :alt="movie.title">
+                        
+                        <div class="movie-content">
+                            
+                            
+                            <h1>{{ movie.title }} <span>({{ Year }})</span></h1>
+                            <p>{{ new Date(movie.release_date).toLocaleDateString('fr-FR') }} - {{ movie.genre?.name }} - {{
                             duration }} </p>
 
-                        <div class="movie-note">
+<div class="movie-note">
+    
+    <Note :note="movie.vote_average" />
+    <button><img src="../assets/svg/play.svg" alt="play trailer"> Voir la bande annonce</button>
+</div>
 
-                            <Note :note="movie.vote_average" />
-                            <button><img src="../assets/svg/play.svg" alt="play trailer"> Voir la bande annonce</button>
-                        </div>
+<div class="synopsis-content">
+    <p class="movie-tagline">{{ movie.tagline }}</p>
+    <h3 class="synopsis">Synopsis</h3>
+    <p>{{ movie.overview }}</p>
+</div>
+</div>
+</div>
 
-                        <div class="synopsis-content">
-                            <p class="movie-tagline">{{ movie.tagline }}</p>
-                            <h3 class="synopsis">Synopsis</h3>
-                            <p>{{ movie.overview }}</p>
-                        </div>
-                    </div>
+</div>
+</div>
+
+
+</div>
+
+
+
+<div class="casting">
+    <div class="container">
+        <h2>Casting</h2>
+        
+        <div class="actor-list">
+            
+            
+            <div class="actor-card" :style="{order:`${actor.order}`}" v-for="actor in movie.actors">
+                <img class="actor-photo" :src="actor.profile_path" alt="actor photo">
+                <div class="card-footer">
+                    <h3>{{ actor.name }} ({{ age(actor.birthday) }} ans)</h3>
+                    <p class="character">{{ actor.character }}</p>
                 </div>
-
             </div>
+            
         </div>
-
-
+        
+        
+        
+        
+        
+        
     </div>
-    <div class="casting">
-        <div class="container">
-            <h2>Casting</h2>
-
-            <div class="actor-list">
-
-
-                <div class="actor-card" :style="{order:`${actor.order}`}" v-for="actor in movie.actors">
-                    <img class="actor-photo" :src="actor.profile_path" alt="actor photo">
-                    <div class="card-footer">
-                        <h3>{{ actor.name }} ({{ age(actor.birthday) }} ans)</h3>
-                        <p class="character">{{ actor.character }}</p>
-                    </div>
-                </div>
-
-            </div>
-
-
-
-
-
-
-        </div>
-
-    </div>
+    
+</div>
+</div>
+<loader v-else/>
 </template>
 
+
+
 <style scoped>
+.loader{
+    height: 200px;
+}
+
 .movie-container {
     background-size: cover;
     background-position: center;
