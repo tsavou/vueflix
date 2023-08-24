@@ -37,7 +37,7 @@ const toggleBio = () => {
     background-color: #fff;
     border-radius: 10px;
     padding: 1em;
-    box-shadow:0 1px 3px 3px #0000001a; ;
+    box-shadow:0 1px 3px 3px #0000001a;
 
 }
 

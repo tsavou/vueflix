@@ -14,14 +14,28 @@ getMovie(route.params.id).then(response => {
     movie.value = response
 })
 
-const Year = computed( () =>  new Date(movie.value.release_date).getFullYear());
+const Year = computed(() => new Date(movie.value.release_date).getFullYear());
 
-const duration = computed (()=>{
+const duration = computed(() => {
     const hours = Math.floor(movie.value.runtime / 60);
-    const min= movie.value.runtime % 60;
+    const min = movie.value.runtime % 60;
 
-    return `${hours}h${min<10?'0' + min:min}`
+    return `${hours}h${min < 10 ? '0' + min : min}`
 })
+
+const age = (date)=>{
+    const today = new Date()
+    const birthday= new Date(date)
+
+    if (today.getMonth()<birthday.getMonth()){
+    return today.getFullYear() - birthday.getFullYear() -1
+    }else{
+        return today.getFullYear() -birthday.getFullYear()
+    }
+
+}
+
+
 
 
 
@@ -37,25 +51,29 @@ const duration = computed (()=>{
     <div class="movie-container" :style="{ backgroundImage: `url(${movie.backdrop_path})` }">
         <div class="movie-bg">
             <div class="container">
-
-                <img class="movie-poster" :src="movie.poster_path" :alt="movie.title">
-
-                <div class="movie-content">
+                <div class="flex-movie">
 
 
-                    <h1>{{ movie.title }} <span>({{ Year }})</span></h1>
-                    <p>{{ new Date(movie.release_date).toLocaleDateString('fr-FR') }} - {{ movie.genre?.name }} - {{ duration }}  </p>
-                    
-                    <div class="movie-note">
+                    <img class="movie-poster" :src="movie.poster_path" :alt="movie.title">
 
-                        <Note :note="movie.vote_average" />
-                        <button><img src="../assets/svg/play.svg" alt="play trailer"> Voir la bande annonce</button>
-                    </div>
+                    <div class="movie-content">
 
-                    <div class="synopsis-content">
-                        <p class="movie-tagline">{{ movie.tagline }}</p>
-                        <h3>Synopsis</h3>
-                        <p>{{ movie.overview }}</p>
+
+                        <h1>{{ movie.title }} <span>({{ Year }})</span></h1>
+                        <p>{{ new Date(movie.release_date).toLocaleDateString('fr-FR') }} - {{ movie.genre?.name }} - {{
+                            duration }} </p>
+
+                        <div class="movie-note">
+
+                            <Note :note="movie.vote_average" />
+                            <button><img src="../assets/svg/play.svg" alt="play trailer"> Voir la bande annonce</button>
+                        </div>
+
+                        <div class="synopsis-content">
+                            <p class="movie-tagline">{{ movie.tagline }}</p>
+                            <h3 class="synopsis">Synopsis</h3>
+                            <p>{{ movie.overview }}</p>
+                        </div>
                     </div>
                 </div>
 
@@ -65,7 +83,29 @@ const duration = computed (()=>{
 
     </div>
     <div class="casting">
-        <!-- composant acteur -->
+        <div class="container">
+            <h2>Casting</h2>
+
+            <div class="actor-list">
+
+
+                <div class="actor-card" v-for="actor in movie.actors">
+                    <img class="actor-photo" :src="actor.profile_path" alt="actor photo">
+                    <div class="card-footer">
+                        <h3>{{ actor.name }} ( {{ age(actor.birthday) }} ans )</h3>
+                        <p class="character">{{ actor.character }}</p>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+
+
+
+        </div>
+
     </div>
 </template>
 
@@ -81,24 +121,22 @@ const duration = computed (()=>{
     color: #fff
 }
 
-.container{
+.flex-movie {
     display: flex;
     align-items: center;
-    padding:40px 0;
+    padding: 40px 0;
     gap: 40px;
 
 }
 
-.movie-poster{    
+.movie-poster {
     height: 400px;
     width: auto;
 }
 
-.movie-content{
+.movie-content {}
 
-}
-
-.movie-note{
+.movie-note {
     display: flex;
     align-items: center;
     margin: 1.5em 0;
@@ -107,8 +145,8 @@ const duration = computed (()=>{
 
 }
 
-.movie-note button{
-    
+.movie-note button {
+
     padding: 10px 15px;
     color: #fff;
     display: flex;
@@ -117,24 +155,48 @@ const duration = computed (()=>{
     background-color: rgba(0, 0, 0, 0);
     border: 0;
     cursor: pointer;
-    font-size: 1em; 
-    
+    font-size: 1em;
+
 }
 
-.movie-note button:hover{
+.movie-note button:hover {
     scale: 1.1;
 }
 
-.movie-tagline{
+.movie-tagline {
     font-style: italic;
 }
 
-h3{
+.synopsis {
     margin: 1em 0;
 }
 
+.actor-list{
+    display: flex;
+    flex-wrap: wrap;
+    gap:2%;
+}
+.actor-card{    
+    box-shadow:0 1px 3px 3px #0000001a;   
+    width: 18%;
+    background-color: #fff;
+    margin-bottom: 2%;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
 
+.actor-photo{
+    width: 100%;
+    border-radius: 10px 10px 0 0;
+}
 
+.character{
+    color: #858585;
+}
 
-
+.card-footer{
+    height: 100%;
+    padding: 0 1em;
+}
 </style>
