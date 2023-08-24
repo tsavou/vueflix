@@ -44,8 +44,8 @@ const duration = computed (()=>{
 
 
                     <h1>{{ movie.title }} <span>({{ Year }})</span></h1>
-                    <p>{{ movie.release_date }}-{{ movie.genre?.name }}-{{ duration }}  </p>
-                    <Note :note="movie.vote_average" /> {{ movie.vote_average }}
+                    <p>{{ new Date(movie.release_date).toLocaleDateString('fr-FR') }} - {{ movie.genre?.name }} - {{ duration }}  </p>
+                    <Note :note="movie.vote_average" />
                     <button><img src="../assets/svg/play.svg" alt="play trailer"> Voir la bande annonce</button>
 
 
