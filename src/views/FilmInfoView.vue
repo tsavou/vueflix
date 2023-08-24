@@ -16,6 +16,13 @@ getMovie(route.params.id).then(response => {
 
 const Year = computed( () =>  new Date(movie.value.release_date).getFullYear());
 
+const duration = computed (()=>{
+    const hours = Math.floor(movie.value.runtime / 60);
+    const min= movie.value.runtime % 60;
+
+    return `${hours}h${min<10?'0' + min:min}`
+})
+
 
 
 
@@ -37,8 +44,8 @@ const Year = computed( () =>  new Date(movie.value.release_date).getFullYear());
 
 
                     <h1>{{ movie.title }} <span>({{ Year }})</span></h1>
-                    <p>{{ movie.release_date }}-{{ movie.genre.name }}-{{ movie.runtime }} min </p>
-                    <Note :note="movie.vote_average" />
+                    <p>{{ movie.release_date }}-{{ movie.genre?.name }}-{{ duration }}  </p>
+                    <Note :note="movie.vote_average" /> {{ movie.vote_average }}
                     <button><img src="../assets/svg/play.svg" alt="play trailer"> Voir la bande annonce</button>
 
 

@@ -1,9 +1,10 @@
 <script setup>
 
-const props = defineProps(['note'])
-const note =  Math.ceil(props.note * 10)
-const color = note >= 70 ? 'green' : note < 40 ? 'red' : 'yellow'
+import { computed } from 'vue'
 
+const props = defineProps(['note'])
+const note = computed (() =>  Math.ceil(props.note * 10));
+const color = note.value >= 70 ? 'green' : note.value < 40 ? 'red' : 'yellow'
 
 </script>
 
