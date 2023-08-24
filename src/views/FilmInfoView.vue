@@ -89,7 +89,7 @@ const age = (date)=>{
             <div class="actor-list">
 
 
-                <div class="actor-card" v-for="actor in movie.actors">
+                <div class="actor-card" :style="{order:`${actor.order}`}" v-for="actor in movie.actors">
                     <img class="actor-photo" :src="actor.profile_path" alt="actor photo">
                     <div class="card-footer">
                         <h3>{{ actor.name }} ({{ age(actor.birthday) }} ans)</h3>
@@ -187,8 +187,10 @@ const age = (date)=>{
 }
 
 .actor-photo{
-    width: 100%;
     border-radius: 10px 10px 0 0;
+    height: 250px;
+    width: 100%;
+    object-fit: cover;
 }
 
 .character{
