@@ -45,13 +45,18 @@ const duration = computed (()=>{
 
                     <h1>{{ movie.title }} <span>({{ Year }})</span></h1>
                     <p>{{ new Date(movie.release_date).toLocaleDateString('fr-FR') }} - {{ movie.genre?.name }} - {{ duration }}  </p>
-                    <Note :note="movie.vote_average" />
-                    <button><img src="../assets/svg/play.svg" alt="play trailer"> Voir la bande annonce</button>
+                    
+                    <div class="movie-note">
 
+                        <Note :note="movie.vote_average" />
+                        <button><img src="../assets/svg/play.svg" alt="play trailer"> Voir la bande annonce</button>
+                    </div>
 
-                    <p>{{ movie.tagline }}</p>
-                    <p>Synopsis</p>
-                    <p>{{ movie.overview }}</p>
+                    <div class="synopsis-content">
+                        <p class="movie-tagline">{{ movie.tagline }}</p>
+                        <h3>Synopsis</h3>
+                        <p>{{ movie.overview }}</p>
+                    </div>
                 </div>
 
             </div>
@@ -88,6 +93,48 @@ const duration = computed (()=>{
     height: 400px;
     width: auto;
 }
+
+.movie-content{
+
+}
+
+.movie-note{
+    display: flex;
+    align-items: center;
+    margin: 1.5em 0;
+    gap: 2em;
+
+
+}
+
+.movie-note button{
+    
+    padding: 10px 15px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 1em;
+    background-color: rgba(0, 0, 0, 0);
+    border: 0;
+    cursor: pointer;
+    font-size: 1em; 
+    
+}
+
+.movie-note button:hover{
+    scale: 1.1;
+}
+
+.movie-tagline{
+    font-style: italic;
+}
+
+h3{
+    margin: 1em 0;
+}
+
+
+
 
 
 </style>
