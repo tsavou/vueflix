@@ -3,6 +3,7 @@ import Button from '@/components/Button.vue';
 import note from '@/components/Note.vue';
 import { RouterLink } from 'vue-router'
 import { ref } from 'vue'
+import slugify from 'slugify'
 
 const props = defineProps(['movie'])
 
@@ -15,12 +16,14 @@ const formatDate = (date) => {
 
 const showBio = ref(false)
 
+const slug = (title) => slugify(title, { lower: true })
+
 </script>
 
 <template>
     <div>
 
-        <RouterLink :to="`/films/${movie.id}`" @mouseover="showBio = !showBio" @mouseout="showBio = !showBio" class="relative">
+        <RouterLink :to="`/films/${movie.id}-${slug(movie.title)}`" @mouseover="showBio = !showBio" @mouseout="showBio = !showBio" class="relative">
             <img :src="movie.poster_path" :alt="movie.title">
 
             <div class="absolute">
@@ -41,6 +44,7 @@ const showBio = ref(false)
 <style scoped>
 .relative {
     position: relative;
+    
 }
 
 .absolute {
@@ -53,7 +57,8 @@ const showBio = ref(false)
     color: #000000;
     font-weight: 700;
     text-align: center;
-    transition: 1s;
+    
+  
   
 
 }

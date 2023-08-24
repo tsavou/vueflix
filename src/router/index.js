@@ -21,7 +21,7 @@ const router = createRouter({
       component: ()=> import('../views/FilmView.vue')
     },
     {
-      path: '/films/:id',
+      path: '/films/:id-:slug?',
       name: 'fiche film',
       component: ()=> import('../views/FilmInfoView.vue')
     },
