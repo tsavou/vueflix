@@ -4,20 +4,32 @@ import { $fetch } from 'ohmyfetch'
 import { ref, computed } from 'vue'
 import Note from '@/components/Note.vue'
 import loader from '@/components/loader.vue'
-import Modal from '../components/Modal.vue'
+import Modal from '@/components/Modal.vue'
+import Button from '../components/Button.vue'
+import dayjs from 'dayjs'
+import 'dayjs/locale/fr'
+dayjs.locale('fr')
 
 
 const route = useRoute();
 const movie = ref({});
+const comments = ref([]);
 const loading = ref(true);
 
 
 const getMovie = (id) => $fetch(`http://localhost:3000/movies/${id}?_expand=genre&_expand=actors`)
+const getComments = (id) => $fetch(`http://localhost:3000/movies/${id}/comments?_expand=user`)
 
 getMovie(route.params.id).then(response => {
     movie.value = response
     loading.value = false
 })
+
+getComments(route.params.id).then(response => {
+    comments.value = response
+    loading.value = false
+})
+
 
 const Year = computed(() => new Date(movie.value.release_date).getFullYear());
 
@@ -66,7 +78,8 @@ const showModal = ref(false);
                             <div class="movie-note">
 
                                 <Note :note="movie.vote_average" />
-                                <button id="show-trailer" @click="showModal=true"><img src="../assets/svg/play.svg" alt="play trailer"> Voir la bande annonce</button>
+                                <button id="show-trailer" @click="showModal = true"><img src="../assets/svg/play.svg"
+                                        alt="play trailer"> Voir la bande annonce</button>
                             </div>
 
                             <div class="synopsis-content">
@@ -84,20 +97,23 @@ const showModal = ref(false);
         </div>
 
         <teleport to='body'>
-            <Modal :show="showModal" @close="showModal=false">
-            <template #body> 
-                <iframe width="100%" height="500" :src="`https://www.youtube.com/embed/${movie.youtube}`" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-            </template>
-            
+            <Modal :show="showModal" @close="showModal = false">
+                <template #body>
+                    <iframe width="100%" height="500" :src="`https://www.youtube.com/embed/${movie.youtube}`"
+                        title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen></iframe>
+                </template>
+
 
             </Modal>
-        </teleport>           
+        </teleport>
 
 
 
 
-        <div class="casting">
-            <div class="container">
+        <div class="container">
+            <div class="casting">
                 <h2>Casting</h2>
 
                 <div class="actor-list">
@@ -113,9 +129,31 @@ const showModal = ref(false);
 
                 </div>
 
+            </div>
 
+            <div class="commentaires">
+                <h2>Commentaires ({{ comments.length }})</h2>
 
+                <div class="comment-form">
+                    <h3>Ajouter un commentaire</h3>
+                    <form action="">
+                        <textarea :placeholder="movie.title + ` est le film de l'année !`"></textarea>
+                        <div><Button>Envoyer</Button></div>
+                    </form>
 
+                </div>
+
+                <div class="comments">
+
+                    <div class="comment" v-for="comment in comments">
+                       <div class="comment-header">
+                         <img :src="`https://i.pravatar.cc/50?u=${comment.user.email}`" :alt="comment.user.name" />
+                        <p> Publié par <strong>{{ comment.user.name }}</strong> le {{ dayjs(comment.createdAt).format('DD MMMM YYYY à HH:mm')}}</p>
+                       </div>
+                    
+                        <p class="comment-content">{{ comment.message }}</p>
+                    </div>
+                </div>
 
 
             </div>
@@ -156,8 +194,8 @@ const showModal = ref(false);
     width: auto;
 }
 
-.year{
-    font-weight:100;
+.year {
+    font-weight: 100;
 }
 
 .movie-note {
@@ -234,5 +272,56 @@ const showModal = ref(false);
 
 h2 {
     margin: 1em 0;
+}
+
+.comment-form {
+    margin: auto;
+    width: 50%;
+}
+
+.comment-form form {
+    display: flex;
+    flex-direction: column;
+}
+
+.comment-form textarea {
+    margin: 1em 0;
+    padding: 0.5em 1em;
+    border-radius: 5px;
+    width: 100%;
+    font-size: 1.1em;
+    line-height: 1.5em;
+    border: lightgray;
+
+}
+
+.comments {
+    border-radius: 10px;
+    background-color: #fff;
+    margin: 1em 0;
+    box-shadow: 0 1px 3px 0 #000000c6
+}
+.comment {   
+    padding: 1em;
+    border-top: solid 1px lightgrey;
+    
+}
+
+.comment-header{
+    display: flex;
+    align-items: center;
+    color: #858585;
+}
+.comment-header img{
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-right: 1em;
+}
+
+
+.comment-content{
+    padding: 1em 0;
 }
 </style>
