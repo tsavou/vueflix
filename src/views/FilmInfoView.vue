@@ -4,10 +4,12 @@ import { $fetch } from 'ohmyfetch'
 import { ref, computed } from 'vue'
 import Note from '@/components/Note.vue'
 import loader from '@/components/loader.vue'
+import Modal from '../components/Modal.vue'
+
 
 const route = useRoute();
 const movie = ref({});
-const loading= ref(true);
+const loading = ref(true);
 
 
 const getMovie = (id) => $fetch(`http://localhost:3000/movies/${id}?_expand=genre&_expand=actors`)
@@ -26,17 +28,19 @@ const duration = computed(() => {
     return `${hours}h${min < 10 ? '0' + min : min}`
 })
 
-const age = (date)=>{
+const age = (date) => {
     const today = new Date()
-    const birthday= new Date(date)
+    const birthday = new Date(date)
 
-    if (today.getMonth()<birthday.getMonth()){
-    return today.getFullYear() - birthday.getFullYear() -1
-    }else{
-        return today.getFullYear() -birthday.getFullYear()
+    if (today.getMonth() < birthday.getMonth()) {
+        return today.getFullYear() - birthday.getFullYear() - 1
+    } else {
+        return today.getFullYear() - birthday.getFullYear()
     }
 
 }
+
+const showModal = ref(false);
 
 
 
@@ -49,71 +53,83 @@ const age = (date)=>{
                 <div class="container">
                     <div class="flex-movie">
 
-                        
+
                         <img class="movie-poster" :src="movie.poster_path" :alt="movie.title">
-                        
+
                         <div class="movie-content">
-                            
-                            
-                            <h1>{{ movie.title }} <span>({{ Year }})</span></h1>
+
+
+                            <h1>{{ movie.title }} <span class="year">({{ Year }})</span></h1>
                             <p>{{ new Date(movie.release_date).toLocaleDateString('fr-FR') }} - {{ movie.genre?.name }} - {{
-                            duration }} </p>
+                                duration }} </p>
 
-<div class="movie-note">
-    
-    <Note :note="movie.vote_average" />
-    <button><img src="../assets/svg/play.svg" alt="play trailer"> Voir la bande annonce</button>
-</div>
+                            <div class="movie-note">
 
-<div class="synopsis-content">
-    <p class="movie-tagline">{{ movie.tagline }}</p>
-    <h3 class="synopsis">Synopsis</h3>
-    <p>{{ movie.overview }}</p>
-</div>
-</div>
-</div>
+                                <Note :note="movie.vote_average" />
+                                <button id="show-trailer" @click="showModal=true"><img src="../assets/svg/play.svg" alt="play trailer"> Voir la bande annonce</button>
+                            </div>
 
-</div>
-</div>
+                            <div class="synopsis-content">
+                                <p class="movie-tagline">{{ movie.tagline }}</p>
+                                <h3 class="synopsis">Synopsis</h3>
+                                <p>{{ movie.overview }}</p>
+                            </div>
+                        </div>
+                    </div>
 
-
-</div>
-
-
-
-<div class="casting">
-    <div class="container">
-        <h2>Casting</h2>
-        
-        <div class="actor-list">
-            
-            
-            <div class="actor-card" :style="{order:`${actor.order}`}" v-for="actor in movie.actors">
-                <img class="actor-photo" :src="actor.profile_path" alt="actor photo">
-                <div class="card-footer">
-                    <h3>{{ actor.name }} ({{ age(actor.birthday) }} ans)</h3>
-                    <p class="character">{{ actor.character }}</p>
                 </div>
             </div>
-            
+
+
         </div>
-        
-        
-        
-        
-        
-        
+
+        <teleport to='body'>
+            <Modal :show="showModal" @close="showModal=false">
+            <template #header>Bande annonce de {{ movie.title }}</template>
+            <template #body> 
+                <iframe width="100%" height="500" :src="`https://www.youtube.com/embed/${movie.youtube}`" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </template>
+            
+
+            </Modal>
+        </teleport>           
+
+
+
+
+        <div class="casting">
+            <div class="container">
+                <h2>Casting</h2>
+
+                <div class="actor-list">
+
+
+                    <div class="actor-card" :style="{ order: `${actor.order}` }" v-for="actor in movie.actors">
+                        <img class="actor-photo" :src="actor.profile_path" alt="actor photo">
+                        <div class="card-footer">
+                            <h3>{{ actor.name }} ({{ age(actor.birthday) }} ans)</h3>
+                            <p class="character">{{ actor.character }}</p>
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+
+
+
+            </div>
+
+        </div>
     </div>
-    
-</div>
-</div>
-<loader v-else/>
+    <loader v-else />
 </template>
 
 
 
 <style scoped>
-.loader{
+.loader {
     height: 200px;
 }
 
@@ -141,13 +157,15 @@ const age = (date)=>{
     width: auto;
 }
 
-.movie-content {}
+.year{
+    font-weight:100;
+}
 
 .movie-note {
     display: flex;
     align-items: center;
-    margin: 1.5em 0;
-    gap: 2em;
+    margin: 0.5em 0;
+    gap: 1.5em;
 
 
 }
@@ -178,13 +196,14 @@ const age = (date)=>{
     margin: 1em 0;
 }
 
-.actor-list{
+.actor-list {
     display: flex;
     flex-wrap: wrap;
-    gap:2%;
+    gap: 2%;
 }
-.actor-card{    
-    box-shadow:0 1px 3px 3px #0000001a;   
+
+.actor-card {
+    box-shadow: 0 1px 3px 3px #0000001a;
     width: 18%;
     background-color: #fff;
     margin-bottom: 2%;
@@ -193,28 +212,28 @@ const age = (date)=>{
     flex-direction: column;
 }
 
-.actor-photo{
+.actor-photo {
     border-radius: 10px 10px 0 0;
     height: 250px;
     width: 100%;
     object-fit: cover;
 }
 
-.character{
+.character {
     color: #858585;
 }
 
-.card-footer{
+.card-footer {
     height: 100%;
     padding: 1em;
 }
 
-.card-footer h3{
+.card-footer h3 {
     font-size: 16px;
-    
+
 }
 
-h2{
+h2 {
     margin: 1em 0;
 }
 </style>
