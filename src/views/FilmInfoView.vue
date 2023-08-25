@@ -85,7 +85,6 @@ const showModal = ref(false);
 
         <teleport to='body'>
             <Modal :show="showModal" @close="showModal=false">
-            <template #header>Bande annonce de {{ movie.title }}</template>
             <template #body> 
                 <iframe width="100%" height="500" :src="`https://www.youtube.com/embed/${movie.youtube}`" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </template>

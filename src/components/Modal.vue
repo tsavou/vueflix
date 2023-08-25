@@ -6,8 +6,8 @@ const props = defineProps({
 
 <template>
     <Transition name="modal">
-        <div v-if="show" class="modal-mask">
-            <div class="modal-container">
+        <div v-if="show" class="modal-mask" @click="$emit('close')">
+            <div class="modal-container" >
                 <button class="modal-default-button" @click="$emit('close')">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="#fff" class="w-6 h-6">
@@ -19,7 +19,7 @@ const props = defineProps({
 
 
 
-                <div class="modal-body">
+                <div class="modal-body" @click.stop>
                     <slot name="body">default body</slot>
                 </div>
 
@@ -47,15 +47,11 @@ const props = defineProps({
     width: 100%;
     max-width: 85vw;
     margin: auto 15%;
-    background-color: #fff;
+    background-color: rgba(0, 0, 0, 0);
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
     transition: all 0.3s ease;
-    background-color: #3a405000;
 }
-
-
-
 
 
 .modal-default-button {
@@ -88,6 +84,6 @@ const props = defineProps({
 
 .modal-enter-from .modal-container,
 .modal-leave-to .modal-container {
-    transform: scale(1.1);
+    transform: scale(0.5);
 }
 </style>
