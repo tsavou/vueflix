@@ -8,22 +8,22 @@ const props = defineProps({
     <Transition name="modal">
         <div v-if="show" class="modal-mask">
             <div class="modal-container">
-                <button class="modal-default-button" @click="$emit('close')">X</button>
+                <button class="modal-default-button" @click="$emit('close')">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="#fff" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
 
-                <div class="modal-header">
-                    <h3><slot name="header">default header</slot></h3>
-                    
-                </div>
+                </button>
+
+
 
                 <div class="modal-body">
                     <slot name="body">default body</slot>
                 </div>
 
-                <div class="modal-footer">
-                    <slot name="footer">
-                       
-                    </slot>
-                </div>
+
             </div>
         </div>
     </Transition>
@@ -37,36 +37,36 @@ const props = defineProps({
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.8);
     display: flex;
     transition: opacity 0.3s ease;
-    
+
 }
 
 .modal-container {
     width: 100%;
     max-width: 85vw;
     margin: auto 15%;
-    padding: 20px 30px;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
-    transition: all 0.3s ease; background-color: #3a4050;
+    transition: all 0.3s ease;
+    background-color: #3a405000;
 }
 
 
-.modal-header h3 {
-    margin-top: 0;
-    color: #b91c1c;
-}
 
-.modal-body {
-    margin: 20px 0; 
-       
-}
+
 
 .modal-default-button {
     float: right;
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    width: 2.5em;
+    
+
+
 }
 
 /*
@@ -90,6 +90,4 @@ const props = defineProps({
 .modal-leave-to .modal-container {
     transform: scale(1.1);
 }
-
-
 </style>
