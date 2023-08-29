@@ -8,6 +8,8 @@ const movies = ref([])
 const loading = ref(true)
 const topPopularity=ref([]);
 const topRated=ref([]);
+const randomSelection=ref([]);
+const randomCategory=ref([]);
 
  $fetch(`http://localhost:3000/movies/`).then(response => {
   setTimeout(() => {
@@ -16,6 +18,7 @@ const topRated=ref([]);
 
     topPopularity.value=(movies.value.sort((a, b) => b.popularity - a.popularity)).slice(0, 4);
     topRated.value=(movies.value.sort((a, b) => b.vote_average - a.vote_average)).slice(0, 4);
+    randomSelection.value= (movies.value.sort(() => Math.random() - 0.5)).slice(0, 4);
 
   }, 500)
 })
@@ -53,6 +56,18 @@ onBeforeMount(async () => {
       
       <div class="movie-container">
         <MovieCard class="movie-card" v-for="movie in topRated" :movie="movie"/> 
+        
+      </div>
+      <h2 class="title">Films aléatoires</h2>
+      
+      <div class="movie-container">
+        <MovieCard class="movie-card" v-for="movie in randomSelection" :movie="movie"/> 
+        
+      </div>
+      <h2 class="title">Films d'une catégorie aléatoire à faire</h2>
+      
+      <div class="movie-container">
+        <MovieCard class="movie-card" v-for="movie in randomCategory" :movie="movie"/> 
         
       </div>
     </div>
