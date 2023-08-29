@@ -58,7 +58,12 @@ nav{
 
 a{
   color: #fff;
-  padding: 0 0.5em;
+  padding: 0.5em;
+}
+
+nav a:hover{   
+  border-bottom: #fff solid 1px;
+  
 }
 
 .red{

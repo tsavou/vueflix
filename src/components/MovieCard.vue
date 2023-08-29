@@ -32,7 +32,7 @@ const slug = (title) => slugify(title, { lower: true })
             </div>
         </RouterLink>
         <div class="card-footer">
-            <RouterLink :to="`/films/${movie.id}`" class="">
+            <RouterLink :to="`/films/${movie.id}-${slug(movie.title)}`" class="">
                 <h3>{{ movie.title }}</h3>
             </RouterLink>
             <p>{{ formatDate(movie.release_date) }}</p>
@@ -56,12 +56,10 @@ const slug = (title) => slugify(title, { lower: true })
 .tagline {
     color: #000000;
     font-weight: 700;
-    text-align: center;
-    
-  
-  
+    text-align: center;       
 
 }
+
 .tagline:hover+img{
     opacity: 0.5;
 }

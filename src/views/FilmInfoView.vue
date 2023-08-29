@@ -292,6 +292,9 @@ h2 {
     font-size: 1.1em;
     line-height: 1.5em;
     border: lightgray;
+    resize:vertical;
+    height: auto;
+
 
 }
 
