@@ -1,18 +1,27 @@
 <script setup>
 import { $fetch } from 'ohmyfetch'
-import { onBeforeMount, ref } from 'vue'
+import { onBeforeMount, ref, computed } from 'vue'
 import MovieCard from '../components/MovieCard.vue';
 import loader from '@/components/Loader.vue';
 
 const movies = ref([])
 const loading = ref(true)
-// Mode asynchrone
-$fetch('https://api.vueflix.boxydev.com/movies').then(response => {
+const topPopularity=ref([]);
+const topRated=ref([]);
+
+ $fetch(`http://localhost:3000/movies/`).then(response => {
   setTimeout(() => {
     movies.value = response
     loading.value = false
+
+    topPopularity.value=(movies.value.sort((a, b) => b.popularity - a.popularity)).slice(0, 4);
+    topRated.value=(movies.value.sort((a, b) => b.vote_average - a.vote_average)).slice(0, 4);
+
   }, 500)
 })
+
+
+
 
 // Mode synchrone
 const genres = ref([]);
@@ -26,17 +35,28 @@ onBeforeMount(async () => {
   <div class="container">
 
     <h1 class="title">Bienvenue sur Vueflix</h1>
-    <!-- <p v-if="loading">Chargement en cours...</p>
-    {{ movies }} {{ genres }} -->
+    <loader v-if="loading"/>
 
-    <h2 class="title">Films les plus populaires</h2>
+    <div v-else>
 
-    <loader v-if="loading" />
-
-    <div v-else class="movie-container">
-      <MovieCard class="movie-card" v-for="movie in movies" :movie="movie" />
-
+      
+      <h2 class="title">Films les plus populaires</h2>
+      
+      
+      
+      <div  class="movie-container">
+        <MovieCard class="movie-card" v-for="movie in topPopularity" :movie="movie"/> 
+        
+      </div>
+      
+      <h2 class="title">Films les mieux notés</h2>
+      
+      <div class="movie-container">
+        <MovieCard class="movie-card" v-for="movie in topRated" :movie="movie"/> 
+        
+      </div>
     </div>
+
 
    
 
