@@ -15,7 +15,7 @@ const route = useRoute();
 const movie = ref({});
 const comments = ref([]);
 const loading = ref(true);
-const newComment = ref({message:''});
+const newComment = ref({ message: '' });
 
 
 const getMovie = (id) => $fetch(`http://localhost:3000/movies/${id}?_expand=genre&_expand=actors`)
@@ -33,22 +33,22 @@ getComments(route.params.id).then(response => {
     loading.value = false
 })
 
-const postComment=(id, message) => {
-    return $fetch(` http://localhost:3000/movies/${id}/comments`,{
+const postComment = (id, message) => {
+    return $fetch(` http://localhost:3000/movies/${id}/comments`, {
         method: 'POST',
         body: { message, userId: 1 }
-})
+    })
 }
 
 const send = (event) => {
-  event.preventDefault()
+    event.preventDefault()
 
-  // Ajoute le commentaire dans l'API puis récupère la liste des coms à jours
-  postComment(movie.value.id, newComment.value.message)
-    .then(() => getComments(movie.value.id))
-    .then((response) => (comments.value = response))
+    // Ajoute le commentaire dans l'API puis récupère la liste des coms à jours
+    postComment(movie.value.id, newComment.value.message)
+        .then(() => getComments(movie.value.id))
+        .then((response) => (comments.value = response))
 
-  newComment.value.message = ''
+    newComment.value.message = ''
 }
 
 
@@ -161,8 +161,9 @@ const showModal = ref(false);
                 <div class="comment-form">
                     <h3>Ajouter un commentaire</h3>
                     <form action="">
-                        <textarea v-model="newComment.message" :placeholder="movie.title + ` est le film de l'année !`"></textarea>
-                        <div><Button @click="send">Envoyer</Button></div>
+                        <textarea v-model="newComment.message"
+                            :placeholder="movie.title + ` est le film de l'année !`"></textarea>
+                        <div><Button @click="send" :disabled="!newComment.message.trim()">Envoyer</Button></div>
                     </form>
 
                 </div>
@@ -170,11 +171,12 @@ const showModal = ref(false);
                 <div class="comments">
 
                     <div class="comment" v-for="comment in comments">
-                       <div class="comment-header">
-                         <img :src="`https://i.pravatar.cc/50?u=${comment.user.email}`" :alt="comment.user.name" />
-                        <p> Publié par <strong>{{ comment.user.name }}</strong> le {{ dayjs(comment.createdAt).format('DD MMMM YYYY à HH:mm')}}</p>
-                       </div>
-                    
+                        <div class="comment-header">
+                            <img :src="`https://i.pravatar.cc/50?u=${comment.user.email}`" :alt="comment.user.name" />
+                            <p> Publié par <strong>{{ comment.user.name }}</strong> le {{
+                                dayjs(comment.createdAt).format('DD MMMM YYYY à HH:mm') }}</p>
+                        </div>
+
                         <p class="comment-content">{{ comment.message }}</p>
                     </div>
                 </div>
@@ -316,7 +318,7 @@ h2 {
     font-size: 1.1em;
     line-height: 1.5em;
     border: lightgray;
-    resize:vertical;
+    resize: vertical;
     height: auto;
 
 
@@ -328,18 +330,20 @@ h2 {
     margin: 1em 0;
     box-shadow: 0 1px 3px 0 #000000c6
 }
-.comment {   
+
+.comment {
     padding: 1em;
     border-top: solid 1px lightgrey;
-    
+
 }
 
-.comment-header{
+.comment-header {
     display: flex;
     align-items: center;
     color: #858585;
 }
-.comment-header img{
+
+.comment-header img {
     width: 50px;
     height: 50px;
     object-fit: cover;
@@ -348,7 +352,6 @@ h2 {
 }
 
 
-.comment-content{
+.comment-content {
     padding: 1em 0;
-}
-</style>
+}</style>
