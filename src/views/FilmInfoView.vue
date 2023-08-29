@@ -15,10 +15,13 @@ const route = useRoute();
 const movie = ref({});
 const comments = ref([]);
 const loading = ref(true);
+const newComment = ref({message:''});
 
 
 const getMovie = (id) => $fetch(`http://localhost:3000/movies/${id}?_expand=genre&_expand=actors`)
 const getComments = (id) => $fetch(`http://localhost:3000/movies/${id}/comments?_expand=user`)
+
+
 
 getMovie(route.params.id).then(response => {
     movie.value = response
@@ -29,6 +32,27 @@ getComments(route.params.id).then(response => {
     comments.value = response
     loading.value = false
 })
+
+const postComment=(id, message) => {
+    return $fetch(` http://localhost:3000/movies/${id}/comments`,{
+        method: 'POST',
+        body: { message, userId: 1 }
+})
+}
+
+const send = (event) => {
+  event.preventDefault()
+
+  // Ajoute le commentaire dans l'API puis récupère la liste des coms à jours
+  postComment(movie.value.id, newComment.value.message)
+    .then(() => getComments(movie.value.id))
+    .then((response) => (comments.value = response))
+
+  newComment.value.message = ''
+}
+
+
+
 
 
 const Year = computed(() => new Date(movie.value.release_date).getFullYear());
@@ -137,8 +161,8 @@ const showModal = ref(false);
                 <div class="comment-form">
                     <h3>Ajouter un commentaire</h3>
                     <form action="">
-                        <textarea :placeholder="movie.title + ` est le film de l'année !`"></textarea>
-                        <div><Button>Envoyer</Button></div>
+                        <textarea v-model="newComment.message" :placeholder="movie.title + ` est le film de l'année !`"></textarea>
+                        <div><Button @click="send">Envoyer</Button></div>
                     </form>
 
                 </div>
