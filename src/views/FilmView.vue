@@ -56,7 +56,11 @@ const PreviousPage = () => {
         
         <div class="page">
             <Button :disabled="page<=1" @click="PreviousPage"><img src="../assets/svg/previous.svg" alt=""></Button>
-            <p id="page">{{ page }}</p>
+            <p>
+                <span class="other-page" v-if="page>1" @click="PreviousPage" >{{ page-1 }}</span>
+                <strong id="page"> - {{ page }} - </strong>
+                <span class="other-page" v-if="page<4" @click="NextPage">{{ page+1 }}</span>
+            </p>
             <Button :disabled="page>=4" @click="NextPage"><img src="../assets/svg/next.svg" alt=""></Button>
         </div>
     </div>
@@ -107,13 +111,24 @@ img{
 .page {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: end;
     
 }
 
 #page{
-    font-size: 1.2em;
-    font-weight: 700;
+    font-size: 1.2em;  
+}
+
+.other-page{
+    cursor: pointer;
+    margin: 0 0.5em;    
+}
+
+.other-page:hover{    
+    text-decoration: underline;
+    font-weight: bold;
+    
+    
 }
 
 @media (max-width: 1024px) {
