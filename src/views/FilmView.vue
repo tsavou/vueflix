@@ -4,6 +4,7 @@ import Button from '@/components/Button.vue';
 import loader from '@/components/loader.vue';
 import { ref } from 'vue'
 import { $fetch } from 'ohmyfetch'
+import { useCartStore } from '@/stores/cart';
 
 
 const movies = ref([])
@@ -39,6 +40,7 @@ const PreviousPage = () => {
 
 }
 
+const store = useCartStore();
 
 </script>
 
@@ -46,8 +48,14 @@ const PreviousPage = () => {
     <div class="container">
 
         <h1 class="title">Films</h1>
+
+        <ul class="cartlist">
+            <li v-for="item in store.cart">
+                <img :src="item.movie.poster_path" :alt="item.movie.title" :title="item.movie.title" width="50">            
+        </li>
+        </ul>
         
-            <loader v-if="loading" />
+        <loader v-if="loading" />
         
         <div v-else class="movie-container">
                 <MovieCard class="movie-card" v-for="movie in movies" :movie="movie" />
@@ -134,6 +142,12 @@ img{
     padding: 0 4px;
     box-shadow: 0 0 0 3px #d1d5db;   
     
+}
+
+.cartlist{
+    display: flex;
+    gap:10px;
+    list-style: none;
 }
 
 @media (max-width: 1024px) {

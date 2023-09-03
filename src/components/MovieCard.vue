@@ -4,6 +4,7 @@ import note from '@/components/Note.vue';
 import { RouterLink } from 'vue-router'
 import { ref } from 'vue'
 import slugify from 'slugify'
+import { useCartStore } from '@/stores/cart';
 
 const props = defineProps(['movie'])
 
@@ -17,6 +18,8 @@ const formatDate = (date) => {
 const showBio = ref(false)
 
 const slug = (title) => slugify(title, { lower: true })
+
+const store = useCartStore()
 
 </script>
 
@@ -36,7 +39,9 @@ const slug = (title) => slugify(title, { lower: true })
                 <h3>{{ movie.title }}</h3>
             </RouterLink>
             <p id="date">{{ formatDate(movie.release_date) }}</p>
-            <Button>Ajouter au panier</Button>
+            <Button v-if="store.incart(movie)" @click="store.remove(movie)">Retirer du panier</Button>
+            <Button v-else @click="store.add(movie)">Ajouter au panier</Button>
+
         </div>
     </div>
 </template>
