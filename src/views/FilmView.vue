@@ -112,9 +112,7 @@ button:disabled {
     background-color: #d1d5db;
 }
 
-img{
-    /* background-color: #b91c1c; */
-}
+
 
 .page {
     display: flex;
