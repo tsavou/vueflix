@@ -113,7 +113,7 @@ button:disabled {
 }
 
 img{
-    background-color: #b91c1c;
+    /* background-color: #b91c1c; */
 }
 
 .page {
