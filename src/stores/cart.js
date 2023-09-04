@@ -11,7 +11,7 @@ export const useCartStore = defineStore('cart', {
         // }
 
         incart(state) {
-            return(movie)=>{
+            return (movie) => {
                 return state.cart.find((item) => item.movie.id === movie.id)
             }
 
