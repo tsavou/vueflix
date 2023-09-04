@@ -121,7 +121,7 @@ const showModal = ref(false);
         </div>
 
         <teleport to='body'>
-            <Modal :show="showModal" @close="showModal = false">
+            <Modal v-show="showModal" @close="showModal = false">
                 <template #body>
                     <iframe width="100%" height="500" :src="`https://www.youtube.com/embed/${movie.youtube}`"
                         title="YouTube video player" frameborder="0"

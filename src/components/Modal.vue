@@ -1,12 +1,12 @@
 <script setup>
-const props = defineProps({
-    show: Boolean
-})
+// const props = defineProps({
+//     show: Boolean
+// })
 </script>
 
 <template>
     <Transition name="modal">
-        <div v-if="show" class="modal-mask" @click="$emit('close')">
+        <div  class="modal-mask" @click="$emit('close')">
             <div class="modal-container"  >
                 <button class="modal-default-button" @click="$emit('close')">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"

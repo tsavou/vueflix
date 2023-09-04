@@ -4,10 +4,13 @@ import { RouterLink } from 'vue-router'
 import Button from '@/components/Button.vue'
 import { useCartStore } from '../stores/cart';
 
+
 const logged = ref(false)
 const toggle = () => logged.value = !logged.value
 
 const cartstore = useCartStore();
+
+
 </script>
 
 <template>
@@ -28,11 +31,12 @@ const cartstore = useCartStore();
 
           <div v-else class="user-logged">
             <strong>tsavou</strong>
-            <img src="https://i.pravatar.cc/75?u=tsavou" alt="tsavou">
+            <img src="https://i.pravatar.cc/75?u=tsavou" alt="tsavou" height="40">
             <Button @click="toggle">X</Button>
 
           </div>
-          <div class="cart" v-if="cartstore.total > 0">
+
+          <div class="cart" v-if="cartstore.total>0" @click="cartstore.toggleCart()">
 
             <svg width="30" height="30" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
               stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -60,6 +64,10 @@ header {
   background-color: #3a4050;
   padding: 1em 0;
   width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2500;  
 }
 
 .flex {
@@ -106,6 +114,7 @@ nav a:hover {
 .cart {
   display: flex;
   margin-left: 10px;
+  cursor: pointer;
 
 }
 
