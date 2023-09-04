@@ -40,7 +40,7 @@ const store = useCartStore()
             </RouterLink>
             <p id="date">{{ formatDate(movie.release_date) }}</p>
             <Button v-if="store.incart(movie)" @click="store.remove(movie)">Retirer du panier</Button>
-            <Button v-else @click="store.add(movie)">Ajouter au panier</Button>
+            <Button v-else @click="store.add(movie)" >Ajouter au panier</Button>
 
         </div>
     </div>

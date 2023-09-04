@@ -25,6 +25,7 @@ export const useCartStore = defineStore('cart', {
     actions: {
         add(movie) {
             this.cart.push({ movie, quantity: 1 })
+            this.cartOpened = true
         },
         remove(movie) {
             const item = this.cart.find((item) => item.movie.id === movie.id)
@@ -36,6 +37,10 @@ export const useCartStore = defineStore('cart', {
 
         toggleCart() {
             this.cartOpened = !this.cartOpened
+        },
+
+        clearCart() {
+            this.cart = []
         }
 
     }
