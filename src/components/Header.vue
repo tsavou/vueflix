@@ -10,6 +10,8 @@ const toggle = () => logged.value = !logged.value
 
 const cartstore = useCartStore();
 
+const isMenuOpen = ref(false)
+
 
 </script>
 
@@ -24,19 +26,27 @@ const cartstore = useCartStore();
 
 
         <nav class="flex">
-          <RouterLink to="/">Accueil</RouterLink>
-          <RouterLink to="/films">Films</RouterLink>
-          <RouterLink to="/a-propos">A propos</RouterLink>
-          <Button @click="toggle" v-if="!logged" class="user-not-logged">Connexion</Button>
+          <div class="navbar">
 
-          <div v-else class="user-logged">
-            <strong>tsavou</strong>
-            <img src="https://i.pravatar.cc/75?u=tsavou" alt="tsavou" height="40">
-            <Button @click="toggle">X</Button>
-
+            <div class="burger-btn" @click="isMenuOpen = !isMenuOpen" v-if="!isMenuOpen">&#x2630;</div>
+            <div class="burger-btn" @click="isMenuOpen = !isMenuOpen" v-else>x</div>
+            
+            <div class="links" :class="{ 'menu-open': isMenuOpen }" >
+              <RouterLink to="/" @click="isMenuOpen = false">Accueil</RouterLink>
+              <RouterLink to="/films" @click="isMenuOpen = false">Films</RouterLink>
+              <RouterLink to="/a-propos" @click="isMenuOpen = false">A propos</RouterLink>
+              <Button @click="toggle" v-if="!logged" class="user-not-logged">Connexion</Button>
+              
+              <div v-else class="user-logged">
+                <strong>tsavou</strong>
+                <img src="https://i.pravatar.cc/75?u=tsavou" alt="tsavou" height="40">
+                <Button @click="toggle">X</Button>
+                
+              </div>
+            </div>
           </div>
 
-          <div class="cart" v-if="cartstore.total>0" @click="cartstore.toggleCart()">
+          <div class="cart" v-if="cartstore.total > 0" @click="cartstore.toggleCart()">
 
             <svg width="30" height="30" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
               stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -56,6 +66,10 @@ const cartstore = useCartStore();
 </template>
 
 <style scoped>
+.burger-btn {
+  display: none;  
+}
+
 .user-logged {
   display: inline;
 }
@@ -67,7 +81,7 @@ header {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 2500;  
+  z-index: 2500;
 }
 
 .flex {
@@ -83,6 +97,7 @@ nav {
 a {
   color: #fff;
   padding: 0.5em;
+  width: 100%;  
 }
 
 nav a:hover {
@@ -123,4 +138,48 @@ nav a:hover {
 
 
 }
+
+@media all and (max-width: 740px) {
+
+  .links {
+    display: none;
+    position: absolute;
+    top: 80px; /* Réglez la position verticale selon vos besoins */
+    left: 0;
+    background-color: #333;
+    width: 100%;
+   
+    
+  }
+
+  .menu-open {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+  }
+
+  .burger-btn {
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;    
+    font-size: 40px;
+    color: white;
+    cursor: pointer;
+  }
+
+  .links a {
+    width: 100%;
+    text-align: center;
+  }
+
+  .links a:hover{
+    background-color: #3a4050;
+  }
+
+  
+}
 </style>
+
