@@ -16,9 +16,9 @@ $fetch(`http://localhost:3000/movies/`).then(response => {
     movies.value = response
     loading.value = false
 
-    topPopularity.value = (movies.value.sort((a, b) => b.popularity - a.popularity)).slice(0, 4);
-    topRated.value = (movies.value.sort((a, b) => b.vote_average - a.vote_average)).slice(0, 4);
-    randomSelection.value = (movies.value.sort(() => Math.random() - 0.5)).slice(0, 4);
+    topPopularity.value = (movies.value.sort((a, b) => b.popularity - a.popularity)).slice(0, 5);
+    topRated.value = (movies.value.sort((a, b) => b.vote_average - a.vote_average)).slice(0, 5);
+    randomSelection.value = (movies.value.sort(() => Math.random() - 0.5)).slice(0, 5);
 
   }, 500)
 })
@@ -49,7 +49,7 @@ onBeforeMount(async () => {
     <div v-else>
 
 
-      <h2 class="title">Films les plus populaires</h2>
+      <h2>Films les plus populaires</h2>
 
 
 
@@ -58,24 +58,19 @@ onBeforeMount(async () => {
 
       </div>
 
-      <h2 class="title">Films les mieux notés</h2>
+      <h2>Films les mieux notés</h2>
 
       <div class="movie-container">
         <MovieCard class="movie-card" v-for="movie in topRated" :movie="movie" />
 
       </div>
-      <h2 class="title">Films aléatoires</h2>
+      <h2>Films aléatoires</h2>
 
       <div class="movie-container">
         <MovieCard class="movie-card" v-for="movie in randomSelection" :movie="movie" />
 
       </div>
-      <h2 class="title">Films d'une catégorie aléatoire à faire</h2>
 
-      <div class="movie-container">
-        <MovieCard class="movie-card" v-for="movie in randomCategory" :movie="movie" />
-
-      </div>
     </div>
 
 
@@ -88,8 +83,6 @@ onBeforeMount(async () => {
 <style scoped>
 .loader {
   height: 200px;
-
-
 }
 
 .movie-container {
@@ -98,6 +91,12 @@ onBeforeMount(async () => {
   justify-content: space-around;
   gap: 2%;
 
+}
+
+h2{
+  text-align: center;
+  margin: 2rem 0 1rem 0;
+  font-size: 30px;
 }
 
 .movie-card {
