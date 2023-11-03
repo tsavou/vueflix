@@ -82,6 +82,7 @@ header {
   top: 0;
   left: 0;
   z-index: 2500;
+  
 }
 
 .flex {

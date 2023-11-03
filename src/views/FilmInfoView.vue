@@ -199,6 +199,7 @@ const showModal = ref(false);
 .movie-container {
     background-size: cover;
     background-position: center;
+    margin-top: 3em;
 }
 
 .movie-bg {

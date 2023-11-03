@@ -1,6 +1,6 @@
 <script setup>
 import { useCartStore } from '@/stores/cart';
-import Button from './Button.vue';
+import Button from '@/components/Button.vue';
 
 const store = useCartStore();
 </script>
@@ -17,14 +17,16 @@ const store = useCartStore();
             <li>
                 {{ item.movie.title }}
             </li>
-        </ul> 
+            <li>
+                <Button @click="store.remove(item)" class="delete-btn">X</Button>
+            </li>
+        </ul>
         <div class="btn">
 
             <Button @click="store.toggleCart()">Réduire</Button>
             <Button @click="store.clearCart()">Annuler mon panier</Button>
         </div>
     </div>
-   
 </template>
 
 <style scoped>
@@ -47,6 +49,7 @@ const store = useCartStore();
     gap: 10px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
 
 .cartlist h3 {
@@ -56,7 +59,12 @@ const store = useCartStore();
 
 
 }
-.btn{
+
+.delete-btn {
+    padding: 0.5em;
+}
+
+.btn {
     display: flex;
     justify-content: space-around;
 }
