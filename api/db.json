@@ -5519,13 +5519,27 @@
       "createdAt": 1698970422356,
       "movieId": "615656",
       "id": 10
+    },
+    {
+      "message": "WOW! ça va vite ?",
+      "userId": 1,
+      "createdAt": 1699210911577,
+      "movieId": "298618",
+      "id": 11
+    },
+    {
+      "message": "いい映画 !",
+      "userId": 2,
+      "createdAt": 1699211007141,
+      "movieId": "1061181",
+      "id": 12
     }
   ],
   "users": [
     {
       "id": 1,
-      "name": "Fiorella",
-      "email": "fiorella@boxydev.com",
+      "name": "tsavou",
+      "email": "tsavou@boxydev.com",
       "password": "$2a$10$uFDXdvdgNr9dpBTD9okqwegk08tOCB0ZpZvDsQ7tqogBfVibGH8tG"
     },
     {

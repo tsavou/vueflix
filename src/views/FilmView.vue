@@ -43,12 +43,20 @@ const PreviousPage = () => {
 
 </script>
 
-<template>    
-  
+<template>
     <div class="container">
 
         <h1 class="title">Films</h1>
 
+        <div class="page">
+            <Button :disabled="page <= 1" @click="PreviousPage"><img src="../assets/svg/previous.svg" alt=""></Button>
+            <p>
+                <span class="other-page" v-if="page > 1" @click="PreviousPage">{{ page - 1 }}</span>
+                <strong id="page"> {{ page }} </strong>
+                <span class="other-page" v-if="page < 4" @click="NextPage">{{ page + 1 }}</span>
+            </p>
+            <Button :disabled="page >= 4" @click="NextPage"><img src="../assets/svg/next.svg" alt=""></Button>
+        </div>
 
 
         <loader v-if="loading" />
@@ -83,7 +91,8 @@ const PreviousPage = () => {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-    gap: 2%;
+    gap: 1rem;
+    margin-top: 1rem;
 
 }
 
@@ -115,7 +124,7 @@ button:disabled {
 .page {
     display: flex;
     justify-content: center;
-    align-items: end;
+    align-items: center;
 
 }
 
@@ -144,21 +153,22 @@ button:disabled {
 
 @media (max-width: 1024px) {
     .movie-card {
-        width: 20%;
+        flex-basis: calc(100% / 4 - 1rem);
     }
 
 }
 
 @media (max-width: 740px) {
     .movie-card {
-        width: 30%;
+        flex-basis: calc(100% / 2 - 1rem);
     }
 
 }
 
 @media (max-width: 500px) {
     .movie-card {
-        width: 100%;
+       flex-basis: 100%;
+
     }
 
 }

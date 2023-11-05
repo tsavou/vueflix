@@ -70,7 +70,7 @@ const getMoviesOrActors = async (pages = 2) => {
       { id: 3, message: 'Et encore un super film', createdAt: now + 5164000, movieId: 346698, userId: 1 },
     ],
     users: [
-      { id: 1, name: 'Fiorella', email: 'fiorella@boxydev.com', password: bcrypt.hashSync('password') },
+      { id: 1, name: 'Tsavou', email: 'tsavou@boxydev.com', password: bcrypt.hashSync('password') },
       { id: 2, name: 'Matthieu', email: 'matthieu@boxydev.com', password: bcrypt.hashSync('password') },
       { id: 3, name: 'Marina', email: 'marina@boxydev.com', password: bcrypt.hashSync('password') },
     ],

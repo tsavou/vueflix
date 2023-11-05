@@ -172,7 +172,7 @@ const showModal = ref(false);
 
                     <div class="comment" v-for="comment in comments">
                         <div class="comment-header">
-                            <img :src="`https://i.pravatar.cc/50?u=${comment.user.email}`" :alt="comment.user.name" />
+                            <img :src="`https://i.pravatar.cc/50?u=${comment.user.name}`" :alt="comment.user.name" />
                             <p> Publié par <strong>{{ comment.user.name }}</strong> le {{
                                 dayjs(comment.createdAt).format('DD MMMM YYYY à HH:mm') }}</p>
                         </div>

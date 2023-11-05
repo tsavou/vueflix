@@ -9,7 +9,6 @@ const loading = ref(true)
 const topPopularity = ref([]);
 const topRated = ref([]);
 const randomSelection = ref([]);
-const randomCategory = ref([]);
 
 $fetch(`http://localhost:3000/movies/`).then(response => {
   setTimeout(() => {
@@ -38,11 +37,16 @@ onBeforeMount(async () => {
   <div class="container">
 
     <h1 class="title">Bienvenue sur Vueflix !</h1>
-    <p>Découvrez le Monde du Cinéma en Un Clic ! </p>
-    <p>Vueflix est votre guichet unique pour l'univers du cinéma. Avec une vaste collection de films, des descriptions
-      complètes, des notations, et des avis d'utilisateurs, c'est l'endroit parfait pour les amateurs de cinéma. Explorez
-      et restez informé des dernières nouvelles cinématographiques. Préparez-vous à vivre une expérience cinéphile
-      inégalée avec Vueflix. </p>
+
+    <div class="about">
+      <p>Découvrez le Monde du Cinéma en Un Clic ! </p>
+      <p>Vueflix est votre guichet unique pour l'univers du cinéma. Avec une vaste collection de films, des descriptions
+        complètes, des notations, et des avis d'utilisateurs, c'est l'endroit parfait pour les amateurs de cinéma.
+        Explorez
+        et restez informé des dernières nouvelles cinématographiques. Préparez-vous à vivre une expérience cinéphile
+        inégalée avec Vueflix. </p>
+    </div>
+
 
     <loader v-if="loading" />
 
@@ -81,6 +85,13 @@ onBeforeMount(async () => {
 </template>
 
 <style scoped>
+
+.about {
+  padding: 1rem;
+  background-color: #3a4050;
+  border-radius: 10px;
+  color: #fff;
+}
 .loader {
   height: 200px;
 }
@@ -93,7 +104,7 @@ onBeforeMount(async () => {
 
 }
 
-h2{
+h2 {
   text-align: center;
   margin: 2rem 0 1rem 0;
   font-size: 30px;
@@ -102,10 +113,33 @@ h2{
 .movie-card {
   width: 18%;
   background-color: #fff;
-  margin-bottom: 2%;
+  margin-bottom: 1rem;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
+
+}
+
+
+@media (max-width: 1024px) {
+    .movie-card {
+        flex-basis: calc(100% / 4 - 1rem);
+    }
+
+}
+
+@media (max-width: 740px) {
+    .movie-card {
+        flex-basis: calc(100% / 3 - 1rem);
+    }
+
+}
+
+@media (max-width: 500px) {
+    .movie-card {
+       flex-basis: calc(100%/2 - 1rem); ;
+
+    }
 
 }
 </style>
